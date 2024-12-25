@@ -1,0 +1,421 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    BOOL
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> consts vars subroutines main
+Rule 2     consts -> consts CONST const_list
+Rule 3     consts -> CONST const_list
+Rule 4     const_list -> const_list const_decl
+Rule 5     const_list -> const_decl
+Rule 6     const_decl -> INT ID ASSIGN NUMBER SEMICOLON
+Rule 7     const_decl -> STRING ID ASSIGN STRING_LITERAL SEMICOLON
+Rule 8     vars -> empty
+Rule 9     subroutines -> empty
+Rule 10    main -> SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list END
+Rule 11    stmt_list -> stmt_list stmt
+Rule 12    stmt_list -> stmt
+Rule 13    stmt -> PRINT LPAREN expr RPAREN SEMICOLON
+Rule 14    expr -> STRING_LITERAL
+Rule 15    expr -> ID
+Rule 16    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ASSIGN               : 6 7
+BOOL                 : 
+CONST                : 2 3
+DO                   : 10
+END                  : 10
+ID                   : 6 7 15
+INT                  : 6
+LPAREN               : 10 13
+MAIN                 : 10
+NUMBER               : 6
+PRINT                : 13
+RPAREN               : 10 13
+SEMICOLON            : 6 7 13
+STRING               : 7
+STRING_LITERAL       : 7 14
+SUBROUTINE           : 10
+VOID                 : 10
+error                : 
+
+Nonterminals, with rules where they appear
+
+const_decl           : 4 5
+const_list           : 2 3 4
+consts               : 1 2
+empty                : 8 9
+expr                 : 13
+main                 : 1
+program              : 0
+stmt                 : 11 12
+stmt_list            : 10 11
+subroutines          : 1
+vars                 : 1
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . consts vars subroutines main
+    (2) consts -> . consts CONST const_list
+    (3) consts -> . CONST const_list
+
+    CONST           shift and go to state 3
+
+    program                        shift and go to state 1
+    consts                         shift and go to state 2
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> consts . vars subroutines main
+    (2) consts -> consts . CONST const_list
+    (8) vars -> . empty
+    (16) empty -> .
+
+    CONST           shift and go to state 5
+    SUBROUTINE      reduce using rule 16 (empty -> .)
+
+    vars                           shift and go to state 4
+    empty                          shift and go to state 6
+
+state 3
+
+    (3) consts -> CONST . const_list
+    (4) const_list -> . const_list const_decl
+    (5) const_list -> . const_decl
+    (6) const_decl -> . INT ID ASSIGN NUMBER SEMICOLON
+    (7) const_decl -> . STRING ID ASSIGN STRING_LITERAL SEMICOLON
+
+    INT             shift and go to state 9
+    STRING          shift and go to state 10
+
+    const_list                     shift and go to state 7
+    const_decl                     shift and go to state 8
+
+state 4
+
+    (1) program -> consts vars . subroutines main
+    (9) subroutines -> . empty
+    (16) empty -> .
+
+    SUBROUTINE      reduce using rule 16 (empty -> .)
+
+    subroutines                    shift and go to state 11
+    empty                          shift and go to state 12
+
+state 5
+
+    (2) consts -> consts CONST . const_list
+    (4) const_list -> . const_list const_decl
+    (5) const_list -> . const_decl
+    (6) const_decl -> . INT ID ASSIGN NUMBER SEMICOLON
+    (7) const_decl -> . STRING ID ASSIGN STRING_LITERAL SEMICOLON
+
+    INT             shift and go to state 9
+    STRING          shift and go to state 10
+
+    const_list                     shift and go to state 13
+    const_decl                     shift and go to state 8
+
+state 6
+
+    (8) vars -> empty .
+
+    SUBROUTINE      reduce using rule 8 (vars -> empty .)
+
+
+state 7
+
+    (3) consts -> CONST const_list .
+    (4) const_list -> const_list . const_decl
+    (6) const_decl -> . INT ID ASSIGN NUMBER SEMICOLON
+    (7) const_decl -> . STRING ID ASSIGN STRING_LITERAL SEMICOLON
+
+    CONST           reduce using rule 3 (consts -> CONST const_list .)
+    SUBROUTINE      reduce using rule 3 (consts -> CONST const_list .)
+    INT             shift and go to state 9
+    STRING          shift and go to state 10
+
+    const_decl                     shift and go to state 14
+
+state 8
+
+    (5) const_list -> const_decl .
+
+    INT             reduce using rule 5 (const_list -> const_decl .)
+    STRING          reduce using rule 5 (const_list -> const_decl .)
+    CONST           reduce using rule 5 (const_list -> const_decl .)
+    SUBROUTINE      reduce using rule 5 (const_list -> const_decl .)
+
+
+state 9
+
+    (6) const_decl -> INT . ID ASSIGN NUMBER SEMICOLON
+
+    ID              shift and go to state 15
+
+
+state 10
+
+    (7) const_decl -> STRING . ID ASSIGN STRING_LITERAL SEMICOLON
+
+    ID              shift and go to state 16
+
+
+state 11
+
+    (1) program -> consts vars subroutines . main
+    (10) main -> . SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list END
+
+    SUBROUTINE      shift and go to state 18
+
+    main                           shift and go to state 17
+
+state 12
+
+    (9) subroutines -> empty .
+
+    SUBROUTINE      reduce using rule 9 (subroutines -> empty .)
+
+
+state 13
+
+    (2) consts -> consts CONST const_list .
+    (4) const_list -> const_list . const_decl
+    (6) const_decl -> . INT ID ASSIGN NUMBER SEMICOLON
+    (7) const_decl -> . STRING ID ASSIGN STRING_LITERAL SEMICOLON
+
+    CONST           reduce using rule 2 (consts -> consts CONST const_list .)
+    SUBROUTINE      reduce using rule 2 (consts -> consts CONST const_list .)
+    INT             shift and go to state 9
+    STRING          shift and go to state 10
+
+    const_decl                     shift and go to state 14
+
+state 14
+
+    (4) const_list -> const_list const_decl .
+
+    INT             reduce using rule 4 (const_list -> const_list const_decl .)
+    STRING          reduce using rule 4 (const_list -> const_list const_decl .)
+    CONST           reduce using rule 4 (const_list -> const_list const_decl .)
+    SUBROUTINE      reduce using rule 4 (const_list -> const_list const_decl .)
+
+
+state 15
+
+    (6) const_decl -> INT ID . ASSIGN NUMBER SEMICOLON
+
+    ASSIGN          shift and go to state 19
+
+
+state 16
+
+    (7) const_decl -> STRING ID . ASSIGN STRING_LITERAL SEMICOLON
+
+    ASSIGN          shift and go to state 20
+
+
+state 17
+
+    (1) program -> consts vars subroutines main .
+
+    $end            reduce using rule 1 (program -> consts vars subroutines main .)
+
+
+state 18
+
+    (10) main -> SUBROUTINE . VOID MAIN LPAREN RPAREN DO stmt_list END
+
+    VOID            shift and go to state 21
+
+
+state 19
+
+    (6) const_decl -> INT ID ASSIGN . NUMBER SEMICOLON
+
+    NUMBER          shift and go to state 22
+
+
+state 20
+
+    (7) const_decl -> STRING ID ASSIGN . STRING_LITERAL SEMICOLON
+
+    STRING_LITERAL  shift and go to state 23
+
+
+state 21
+
+    (10) main -> SUBROUTINE VOID . MAIN LPAREN RPAREN DO stmt_list END
+
+    MAIN            shift and go to state 24
+
+
+state 22
+
+    (6) const_decl -> INT ID ASSIGN NUMBER . SEMICOLON
+
+    SEMICOLON       shift and go to state 25
+
+
+state 23
+
+    (7) const_decl -> STRING ID ASSIGN STRING_LITERAL . SEMICOLON
+
+    SEMICOLON       shift and go to state 26
+
+
+state 24
+
+    (10) main -> SUBROUTINE VOID MAIN . LPAREN RPAREN DO stmt_list END
+
+    LPAREN          shift and go to state 27
+
+
+state 25
+
+    (6) const_decl -> INT ID ASSIGN NUMBER SEMICOLON .
+
+    INT             reduce using rule 6 (const_decl -> INT ID ASSIGN NUMBER SEMICOLON .)
+    STRING          reduce using rule 6 (const_decl -> INT ID ASSIGN NUMBER SEMICOLON .)
+    CONST           reduce using rule 6 (const_decl -> INT ID ASSIGN NUMBER SEMICOLON .)
+    SUBROUTINE      reduce using rule 6 (const_decl -> INT ID ASSIGN NUMBER SEMICOLON .)
+
+
+state 26
+
+    (7) const_decl -> STRING ID ASSIGN STRING_LITERAL SEMICOLON .
+
+    INT             reduce using rule 7 (const_decl -> STRING ID ASSIGN STRING_LITERAL SEMICOLON .)
+    STRING          reduce using rule 7 (const_decl -> STRING ID ASSIGN STRING_LITERAL SEMICOLON .)
+    CONST           reduce using rule 7 (const_decl -> STRING ID ASSIGN STRING_LITERAL SEMICOLON .)
+    SUBROUTINE      reduce using rule 7 (const_decl -> STRING ID ASSIGN STRING_LITERAL SEMICOLON .)
+
+
+state 27
+
+    (10) main -> SUBROUTINE VOID MAIN LPAREN . RPAREN DO stmt_list END
+
+    RPAREN          shift and go to state 28
+
+
+state 28
+
+    (10) main -> SUBROUTINE VOID MAIN LPAREN RPAREN . DO stmt_list END
+
+    DO              shift and go to state 29
+
+
+state 29
+
+    (10) main -> SUBROUTINE VOID MAIN LPAREN RPAREN DO . stmt_list END
+    (11) stmt_list -> . stmt_list stmt
+    (12) stmt_list -> . stmt
+    (13) stmt -> . PRINT LPAREN expr RPAREN SEMICOLON
+
+    PRINT           shift and go to state 32
+
+    stmt_list                      shift and go to state 30
+    stmt                           shift and go to state 31
+
+state 30
+
+    (10) main -> SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list . END
+    (11) stmt_list -> stmt_list . stmt
+    (13) stmt -> . PRINT LPAREN expr RPAREN SEMICOLON
+
+    END             shift and go to state 33
+    PRINT           shift and go to state 32
+
+    stmt                           shift and go to state 34
+
+state 31
+
+    (12) stmt_list -> stmt .
+
+    END             reduce using rule 12 (stmt_list -> stmt .)
+    PRINT           reduce using rule 12 (stmt_list -> stmt .)
+
+
+state 32
+
+    (13) stmt -> PRINT . LPAREN expr RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 35
+
+
+state 33
+
+    (10) main -> SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list END .
+
+    $end            reduce using rule 10 (main -> SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list END .)
+
+
+state 34
+
+    (11) stmt_list -> stmt_list stmt .
+
+    END             reduce using rule 11 (stmt_list -> stmt_list stmt .)
+    PRINT           reduce using rule 11 (stmt_list -> stmt_list stmt .)
+
+
+state 35
+
+    (13) stmt -> PRINT LPAREN . expr RPAREN SEMICOLON
+    (14) expr -> . STRING_LITERAL
+    (15) expr -> . ID
+
+    STRING_LITERAL  shift and go to state 37
+    ID              shift and go to state 38
+
+    expr                           shift and go to state 36
+
+state 36
+
+    (13) stmt -> PRINT LPAREN expr . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 39
+
+
+state 37
+
+    (14) expr -> STRING_LITERAL .
+
+    RPAREN          reduce using rule 14 (expr -> STRING_LITERAL .)
+
+
+state 38
+
+    (15) expr -> ID .
+
+    RPAREN          reduce using rule 15 (expr -> ID .)
+
+
+state 39
+
+    (13) stmt -> PRINT LPAREN expr RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 40
+
+
+state 40
+
+    (13) stmt -> PRINT LPAREN expr RPAREN SEMICOLON .
+
+    END             reduce using rule 13 (stmt -> PRINT LPAREN expr RPAREN SEMICOLON .)
+    PRINT           reduce using rule 13 (stmt -> PRINT LPAREN expr RPAREN SEMICOLON .)
+
