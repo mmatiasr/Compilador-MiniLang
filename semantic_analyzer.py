@@ -76,6 +76,8 @@ class SemanticAnalyzer:
 
     def visit_assignment(self, node):
         var_name = node.children[0].value
+        if var_name in self.symbol_table.functions:
+            raise Exception(f"No se puede asignar un valor a la función '{var_name}'.")
         if self.symbol_table.is_constant(var_name):
             raise Exception(f"No se puede reasignar la constante '{var_name}'.")
         var_type = self.symbol_table.lookup(var_name)
@@ -86,11 +88,41 @@ class SemanticAnalyzer:
     def visit_binary_op(self, node):
         left_type = self.visit(node.children[0])
         right_type = self.visit(node.children[1])
-        if node.value in ['+', '-', '*', '/']:
-            if left_type == 'string' and right_type == 'int':
-                return 'string'  # Conversión y concatenación
+        if node.value == '+':
+            if left_type == 'string' and right_type == 'string':
+                return 'string'  # Concatenación de strings
+            elif left_type == 'string' and right_type == 'int':
+                return 'string'  # Conversión implícita y concatenación
             elif left_type == 'int' and right_type == 'string':
-                return 'string'  # Conversión y concatenación
+                return 'string'  # Conversión implícita y concatenación
             elif left_type != right_type:
                 raise Exception(f"Operación no válida entre {left_type} y {right_type}.")
-        return left_type  # Suponiendo que los tipos sean iguales
+        elif node.value in ['-', '*', '/']:
+            if left_type != 'int' or right_type != 'int':
+                raise Exception(f"Operación no válida: {node.value} solo es válida entre enteros.")
+        return left_type
+    
+    def visit_return(self, node):
+        subroutine_name = node.parent.value  # Asume que el nodo tiene un padre que representa la subrutina
+        declared_return_type = self.symbol_table.functions[subroutine_name]['return_type']
+        if declared_return_type == 'void':
+            if len(node.children) > 0:
+                raise Exception(f"La subrutina '{subroutine_name}' no debe devolver un valor, ya que su tipo es 'void'.")
+        else:
+            if len(node.children) == 0:
+                raise Exception(f"La subrutina '{subroutine_name}' debe devolver un valor de tipo '{declared_return_type}'.")
+            return_type = self.visit(node.children[0])
+            if return_type != declared_return_type:
+                raise Exception(f"La subrutina '{subroutine_name}' debe devolver un valor de tipo '{declared_return_type}', pero devuelve '{return_type}'.")
+
+    def visit_subroutine_call(self, node):
+        subroutine_name = node.value
+        declared_params = self.symbol_table.lookup_function(subroutine_name)['params']
+        if len(declared_params) != len(node.children):
+            raise Exception(f"La subrutina '{subroutine_name}' esperaba {len(declared_params)} parámetros, pero se pasaron {len(node.children)}.")
+        for i, param in enumerate(node.children):
+            param_type = self.visit(param)
+            if param_type != declared_params[i]:
+                raise Exception(f"El parámetro {i+1} debe ser de tipo {declared_params[i]}, pero se encontró {param_type}.")
+
+
