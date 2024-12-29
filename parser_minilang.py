@@ -154,4 +154,4 @@ def p_error(p):
         print("Error de sintaxis al final del archivo.")
 
 # Construcción del parser
-parser = yacc.yacc()
+parser = yacc.yacc(debug=False)
