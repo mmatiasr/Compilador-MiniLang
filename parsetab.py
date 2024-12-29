@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ASSIGN BOOL COMMA CONST DIVIDE DO END ID INT LPAREN MAIN MINUS NUMBER PLUS PRINT RPAREN SEMICOLON STRING STRING_LITERAL SUBROUTINE TIMES VOIDprogram : consts vars subroutines maintype : INT\n            | STRING\n            | BOOLconsts : consts const_decl\n              | emptyconst_decl : CONST type ID ASSIGN expr SEMICOLONvars : vars var_decl\n            | emptyvar_decl : type ID ASSIGN expr SEMICOLONsubroutines : subroutines subroutine_decl\n                   | emptysubroutine_decl : SUBROUTINE type ID LPAREN param_list RPAREN DO stmt_list ENDparam_list : param_list COMMA param\n                  | param\n                  | emptyparam : type IDmain : SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list ENDstmt_list : stmt_list stmt\n                 | stmtstmt : var_decl\n            | const_decl\n            | subroutine_decl\n            | PRINT LPAREN expr RPAREN SEMICOLONexpr : expr PLUS expr\n            | expr MINUS expr\n            | expr TIMES expr\n            | expr DIVIDE expr\n            | STRING_LITERAL\n            | NUMBER\n            | IDempty :'
+_lr_signature = 'ASSIGN BOOL COMMA CONST DIVIDE DO END ID INT LPAREN MAIN MINUS NUMBER PLUS PRINT RPAREN SEMICOLON STRING STRING_LITERAL SUBROUTINE TIMES VOIDprogram : consts vars stmt_list maintype : INT\n            | STRING\n            | BOOL\n            | VOIDconsts : consts const_decl\n              | emptyconst_decl : CONST type ID ASSIGN expr SEMICOLONvars : vars var_decl\n            | emptyvar_decl : type ID ASSIGN expr SEMICOLONsubroutines : subroutines subroutine_decl\n                   | emptysubroutine_decl : SUBROUTINE type ID LPAREN param_list RPAREN DO stmt_list ENDparam_list : param_list COMMA param\n                  | param\n                  | emptyparam : type IDmain : SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list ENDstmt_list : stmt_list stmt\n                 | stmtstmt : var_decl\n            | const_decl\n            | subroutine_decl\n            | PRINT LPAREN expr RPAREN SEMICOLONstmt : ID LPAREN arg_list RPAREN SEMICOLONarg_list : arg_list COMMA expr\n                | expr\n                | emptyexpr : expr PLUS expr\n            | expr MINUS expr\n            | expr TIMES expr\n            | expr DIVIDE expr\n            | STRING_LITERAL\n            | NUMBER\n            | IDempty :'
     
-_lr_action_items = {'CONST':([0,2,3,5,34,39,49,54,55,56,57,58,60,63,65,67,69,],[-32,7,-6,-5,-10,-7,7,7,-20,-21,-22,-23,7,-19,7,-13,-24,]),'INT':([0,2,3,4,5,6,7,9,18,33,34,39,49,52,53,54,55,56,57,58,60,63,65,67,69,],[-32,-32,-6,12,-5,-9,12,-8,12,12,-10,-7,12,12,12,12,-20,-21,-22,-23,12,-19,12,-13,-24,]),'STRING':([0,2,3,4,5,6,7,9,18,33,34,39,49,52,53,54,55,56,57,58,60,63,65,67,69,],[-32,-32,-6,13,-5,-9,13,-8,13,13,-10,-7,13,13,13,13,-20,-21,-22,-23,13,-19,13,-13,-24,]),'BOOL':([0,2,3,4,5,6,7,9,18,33,34,39,49,52,53,54,55,56,57,58,60,63,65,67,69,],[-32,-32,-6,14,-5,-9,14,-8,14,14,-10,-7,14,14,14,14,-20,-21,-22,-23,14,-19,14,-13,-24,]),'SUBROUTINE':([0,2,3,4,5,6,8,9,10,17,34,39,49,54,55,56,57,58,60,63,65,67,69,],[-32,-32,-6,-32,-5,-9,18,-8,-12,-11,-10,-7,53,53,-20,-21,-22,-23,53,-19,53,-13,-24,]),'$end':([1,16,62,],[0,-1,-18,]),'ID':([11,12,13,14,15,22,23,24,35,36,37,38,41,64,],[19,-2,-3,-4,20,26,27,27,27,27,27,27,50,27,]),'VOID':([18,],[21,]),'ASSIGN':([19,20,],[23,24,]),'MAIN':([21,],[25,]),'STRING_LITERAL':([23,24,35,36,37,38,64,],[29,29,29,29,29,29,29,]),'NUMBER':([23,24,35,36,37,38,64,],[30,30,30,30,30,30,30,]),'LPAREN':([25,26,59,],[32,33,64,]),'SEMICOLON':([27,28,29,30,31,45,46,47,48,68,],[-31,34,-29,-30,39,-25,-26,-27,-28,69,]),'PLUS':([27,28,29,30,31,45,46,47,48,66,],[-31,35,-29,-30,35,35,35,35,35,35,]),'MINUS':([27,28,29,30,31,45,46,47,48,66,],[-31,36,-29,-30,36,36,36,36,36,36,]),'TIMES':([27,28,29,30,31,45,46,47,48,66,],[-31,37,-29,-30,37,37,37,37,37,37,]),'DIVIDE':([27,28,29,30,31,45,46,47,48,66,],[-31,38,-29,-30,38,38,38,38,38,38,]),'RPAREN':([27,29,30,32,33,42,43,44,45,46,47,48,50,61,66,],[-31,-29,-30,40,-32,51,-15,-16,-25,-26,-27,-28,-17,-14,68,]),'COMMA':([33,42,43,44,50,61,],[-32,52,-15,-16,-17,-14,]),'END':([34,39,54,55,56,57,58,63,65,67,69,],[-10,-7,62,-20,-21,-22,-23,-19,67,-13,-24,]),'PRINT':([34,39,49,54,55,56,57,58,60,63,65,67,69,],[-10,-7,59,59,-20,-21,-22,-23,59,-19,59,-13,-24,]),'DO':([40,51,],[49,60,]),}
+_lr_action_items = {'CONST':([0,2,3,4,5,6,8,9,10,13,14,23,25,54,55,61,66,71,72,74,75,77,],[-37,7,-7,7,-6,-10,7,-9,-21,-23,-24,-20,-22,-11,-26,-25,-8,7,7,7,7,-14,]),'PRINT':([0,2,3,4,5,6,8,9,10,13,14,23,25,54,55,61,66,71,72,74,75,77,],[-37,-37,-7,15,-6,-10,15,-9,-21,-23,-24,-20,-22,-11,-26,-25,-8,15,15,15,15,-14,]),'ID':([0,2,3,4,5,6,8,9,10,11,13,14,16,17,18,19,21,23,25,27,28,29,31,32,41,45,46,47,48,49,54,55,61,62,66,71,72,74,75,77,],[-37,-37,-7,12,-6,-10,12,-9,-21,26,-23,-24,-2,-3,-4,-5,30,-20,-22,33,33,40,-5,33,33,33,33,33,33,33,-11,-26,-25,68,-8,12,12,12,12,-14,]),'INT':([0,2,3,4,5,6,7,8,9,10,13,14,20,23,24,25,51,54,55,61,66,70,71,72,74,75,77,],[-37,-37,-7,16,-6,-10,16,16,-9,-21,-23,-24,16,-20,16,-22,16,-11,-26,-25,-8,16,16,16,16,16,-14,]),'STRING':([0,2,3,4,5,6,7,8,9,10,13,14,20,23,24,25,51,54,55,61,66,70,71,72,74,75,77,],[-37,-37,-7,17,-6,-10,17,17,-9,-21,-23,-24,17,-20,17,-22,17,-11,-26,-25,-8,17,17,17,17,17,-14,]),'BOOL':([0,2,3,4,5,6,7,8,9,10,13,14,20,23,24,25,51,54,55,61,66,70,71,72,74,75,77,],[-37,-37,-7,18,-6,-10,18,18,-9,-21,-23,-24,18,-20,18,-22,18,-11,-26,-25,-8,18,18,18,18,18,-14,]),'VOID':([0,2,3,4,5,6,7,8,9,10,13,14,20,23,24,25,51,54,55,61,66,70,71,72,74,75,77,],[-37,-37,-7,19,-6,-10,19,19,-9,-21,-23,-24,19,-20,31,-22,19,-11,-26,-25,-8,19,19,19,19,19,-14,]),'SUBROUTINE':([0,2,3,4,5,6,8,9,10,13,14,23,25,54,55,61,66,71,72,74,75,77,],[-37,-37,-7,20,-6,-10,24,-9,-21,-23,-24,-20,-22,-11,-26,-25,-8,20,20,20,20,-14,]),'$end':([1,22,76,],[0,-1,-19,]),'END':([10,13,14,23,25,54,55,61,66,74,75,77,],[-21,-23,-24,-20,-22,-11,-26,-25,-8,76,77,-14,]),'LPAREN':([12,15,40,42,],[27,28,51,53,]),'ASSIGN':([26,30,],[32,41,]),'STRING_LITERAL':([27,28,32,41,45,46,47,48,49,],[37,37,37,37,37,37,37,37,37,]),'NUMBER':([27,28,32,41,45,46,47,48,49,],[38,38,38,38,38,38,38,38,38,]),'RPAREN':([27,33,34,35,36,37,38,39,51,53,56,57,58,59,60,63,64,65,68,73,],[-37,-36,44,-28,-29,-34,-35,50,-37,67,-27,-30,-31,-32,-33,69,-16,-17,-18,-15,]),'COMMA':([27,33,34,35,36,37,38,51,56,57,58,59,60,63,64,65,68,73,],[-37,-36,45,-28,-29,-34,-35,-37,-27,-30,-31,-32,-33,70,-16,-17,-18,-15,]),'MAIN':([31,],[42,]),'PLUS':([33,35,37,38,39,43,52,56,57,58,59,60,],[-36,46,-34,-35,46,46,46,46,46,46,46,46,]),'MINUS':([33,35,37,38,39,43,52,56,57,58,59,60,],[-36,47,-34,-35,47,47,47,47,47,47,47,47,]),'TIMES':([33,35,37,38,39,43,52,56,57,58,59,60,],[-36,48,-34,-35,48,48,48,48,48,48,48,48,]),'DIVIDE':([33,35,37,38,39,43,52,56,57,58,59,60,],[-36,49,-34,-35,49,49,49,49,49,49,49,49,]),'SEMICOLON':([33,37,38,43,44,50,52,57,58,59,60,],[-36,-34,-35,54,55,61,66,-30,-31,-32,-33,]),'DO':([67,69,],[71,72,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'program':([0,],[1,]),'consts':([0,],[2,]),'empty':([0,2,4,33,],[3,6,10,44,]),'vars':([2,],[4,]),'const_decl':([2,49,54,60,65,],[5,57,57,57,57,]),'subroutines':([4,],[8,]),'var_decl':([4,49,54,60,65,],[9,56,56,56,56,]),'type':([4,7,18,33,49,52,53,54,60,65,],[11,15,22,41,11,41,22,11,11,11,]),'main':([8,],[16,]),'subroutine_decl':([8,49,54,60,65,],[17,58,58,58,58,]),'expr':([23,24,35,36,37,38,64,],[28,31,45,46,47,48,66,]),'param_list':([33,],[42,]),'param':([33,52,],[43,61,]),'stmt_list':([49,60,],[54,65,]),'stmt':([49,54,60,65,],[55,63,55,63,]),}
+_lr_goto_items = {'program':([0,],[1,]),'consts':([0,],[2,]),'empty':([0,2,27,51,],[3,6,36,65,]),'vars':([2,],[4,]),'const_decl':([2,4,8,71,72,74,75,],[5,13,13,13,13,13,13,]),'stmt_list':([4,71,72,],[8,74,75,]),'var_decl':([4,8,71,72,74,75,],[9,25,25,25,25,25,]),'stmt':([4,8,71,72,74,75,],[10,23,10,10,23,23,]),'type':([4,7,8,20,24,51,70,71,72,74,75,],[11,21,11,29,29,62,62,11,11,11,11,]),'subroutine_decl':([4,8,71,72,74,75,],[14,14,14,14,14,14,]),'main':([8,],[22,]),'arg_list':([27,],[34,]),'expr':([27,28,32,41,45,46,47,48,49,],[35,39,43,52,56,57,58,59,60,]),'param_list':([51,],[63,]),'param':([51,70,],[64,73,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,36 +27,41 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> program","S'",1,None,None,None),
-  ('program -> consts vars subroutines main','program',4,'p_program','parser_minilang.py',15),
+  ('program -> consts vars stmt_list main','program',4,'p_program','parser_minilang.py',15),
   ('type -> INT','type',1,'p_type','parser_minilang.py',21),
   ('type -> STRING','type',1,'p_type','parser_minilang.py',22),
   ('type -> BOOL','type',1,'p_type','parser_minilang.py',23),
-  ('consts -> consts const_decl','consts',2,'p_consts','parser_minilang.py',28),
-  ('consts -> empty','consts',1,'p_consts','parser_minilang.py',29),
-  ('const_decl -> CONST type ID ASSIGN expr SEMICOLON','const_decl',6,'p_const_decl','parser_minilang.py',36),
-  ('vars -> vars var_decl','vars',2,'p_vars','parser_minilang.py',42),
-  ('vars -> empty','vars',1,'p_vars','parser_minilang.py',43),
-  ('var_decl -> type ID ASSIGN expr SEMICOLON','var_decl',5,'p_var_decl','parser_minilang.py',50),
-  ('subroutines -> subroutines subroutine_decl','subroutines',2,'p_subroutines','parser_minilang.py',56),
-  ('subroutines -> empty','subroutines',1,'p_subroutines','parser_minilang.py',57),
-  ('subroutine_decl -> SUBROUTINE type ID LPAREN param_list RPAREN DO stmt_list END','subroutine_decl',9,'p_subroutine_decl','parser_minilang.py',64),
-  ('param_list -> param_list COMMA param','param_list',3,'p_param_list','parser_minilang.py',70),
-  ('param_list -> param','param_list',1,'p_param_list','parser_minilang.py',71),
-  ('param_list -> empty','param_list',1,'p_param_list','parser_minilang.py',72),
-  ('param -> type ID','param',2,'p_param','parser_minilang.py',81),
-  ('main -> SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list END','main',8,'p_main','parser_minilang.py',86),
-  ('stmt_list -> stmt_list stmt','stmt_list',2,'p_stmt_list','parser_minilang.py',92),
-  ('stmt_list -> stmt','stmt_list',1,'p_stmt_list','parser_minilang.py',93),
-  ('stmt -> var_decl','stmt',1,'p_stmt','parser_minilang.py',101),
-  ('stmt -> const_decl','stmt',1,'p_stmt','parser_minilang.py',102),
-  ('stmt -> subroutine_decl','stmt',1,'p_stmt','parser_minilang.py',103),
-  ('stmt -> PRINT LPAREN expr RPAREN SEMICOLON','stmt',5,'p_stmt','parser_minilang.py',104),
-  ('expr -> expr PLUS expr','expr',3,'p_expr','parser_minilang.py',113),
-  ('expr -> expr MINUS expr','expr',3,'p_expr','parser_minilang.py',114),
-  ('expr -> expr TIMES expr','expr',3,'p_expr','parser_minilang.py',115),
-  ('expr -> expr DIVIDE expr','expr',3,'p_expr','parser_minilang.py',116),
-  ('expr -> STRING_LITERAL','expr',1,'p_expr','parser_minilang.py',117),
-  ('expr -> NUMBER','expr',1,'p_expr','parser_minilang.py',118),
-  ('expr -> ID','expr',1,'p_expr','parser_minilang.py',119),
-  ('empty -> <empty>','empty',0,'p_empty','parser_minilang.py',128),
+  ('type -> VOID','type',1,'p_type','parser_minilang.py',24),
+  ('consts -> consts const_decl','consts',2,'p_consts','parser_minilang.py',29),
+  ('consts -> empty','consts',1,'p_consts','parser_minilang.py',30),
+  ('const_decl -> CONST type ID ASSIGN expr SEMICOLON','const_decl',6,'p_const_decl','parser_minilang.py',37),
+  ('vars -> vars var_decl','vars',2,'p_vars','parser_minilang.py',43),
+  ('vars -> empty','vars',1,'p_vars','parser_minilang.py',44),
+  ('var_decl -> type ID ASSIGN expr SEMICOLON','var_decl',5,'p_var_decl','parser_minilang.py',51),
+  ('subroutines -> subroutines subroutine_decl','subroutines',2,'p_subroutines','parser_minilang.py',57),
+  ('subroutines -> empty','subroutines',1,'p_subroutines','parser_minilang.py',58),
+  ('subroutine_decl -> SUBROUTINE type ID LPAREN param_list RPAREN DO stmt_list END','subroutine_decl',9,'p_subroutine_decl','parser_minilang.py',65),
+  ('param_list -> param_list COMMA param','param_list',3,'p_param_list','parser_minilang.py',71),
+  ('param_list -> param','param_list',1,'p_param_list','parser_minilang.py',72),
+  ('param_list -> empty','param_list',1,'p_param_list','parser_minilang.py',73),
+  ('param -> type ID','param',2,'p_param','parser_minilang.py',82),
+  ('main -> SUBROUTINE VOID MAIN LPAREN RPAREN DO stmt_list END','main',8,'p_main','parser_minilang.py',87),
+  ('stmt_list -> stmt_list stmt','stmt_list',2,'p_stmt_list','parser_minilang.py',93),
+  ('stmt_list -> stmt','stmt_list',1,'p_stmt_list','parser_minilang.py',94),
+  ('stmt -> var_decl','stmt',1,'p_stmt','parser_minilang.py',102),
+  ('stmt -> const_decl','stmt',1,'p_stmt','parser_minilang.py',103),
+  ('stmt -> subroutine_decl','stmt',1,'p_stmt','parser_minilang.py',104),
+  ('stmt -> PRINT LPAREN expr RPAREN SEMICOLON','stmt',5,'p_stmt','parser_minilang.py',105),
+  ('stmt -> ID LPAREN arg_list RPAREN SEMICOLON','stmt',5,'p_stmt_call','parser_minilang.py',113),
+  ('arg_list -> arg_list COMMA expr','arg_list',3,'p_arg_list','parser_minilang.py',118),
+  ('arg_list -> expr','arg_list',1,'p_arg_list','parser_minilang.py',119),
+  ('arg_list -> empty','arg_list',1,'p_arg_list','parser_minilang.py',120),
+  ('expr -> expr PLUS expr','expr',3,'p_expr','parser_minilang.py',131),
+  ('expr -> expr MINUS expr','expr',3,'p_expr','parser_minilang.py',132),
+  ('expr -> expr TIMES expr','expr',3,'p_expr','parser_minilang.py',133),
+  ('expr -> expr DIVIDE expr','expr',3,'p_expr','parser_minilang.py',134),
+  ('expr -> STRING_LITERAL','expr',1,'p_expr','parser_minilang.py',135),
+  ('expr -> NUMBER','expr',1,'p_expr','parser_minilang.py',136),
+  ('expr -> ID','expr',1,'p_expr','parser_minilang.py',137),
+  ('empty -> <empty>','empty',0,'p_empty','parser_minilang.py',146),
 ]

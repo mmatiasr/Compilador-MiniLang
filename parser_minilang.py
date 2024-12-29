@@ -12,7 +12,7 @@ class ASTNode:
 
 # Regla principal del programa
 def p_program(p):
-    '''program : consts vars subroutines main'''
+    '''program : consts vars stmt_list main'''
     print("Procesando programa...")
     p[0] = ASTNode('program', [p[1], p[2], p[3], p[4]])
 
@@ -20,7 +20,8 @@ def p_program(p):
 def p_type(p):
     '''type : INT
             | STRING
-            | BOOL'''
+            | BOOL
+            | VOID'''
     p[0] = p[1]
 
 # Declaraciones de constantes
@@ -107,6 +108,23 @@ def p_stmt(p):
         p[0] = ASTNode('print', [p[3]])
     else:
         p[0] = p[1]
+
+def p_stmt_call(p):
+    '''stmt : ID LPAREN arg_list RPAREN SEMICOLON'''
+    print(f"Llamando a subrutina: {p[1]} con argumentos {p[3]}")
+    p[0] = ASTNode('call', [ASTNode('id', value=p[1]), p[3]])
+
+def p_arg_list(p):
+    '''arg_list : arg_list COMMA expr
+                | expr
+                | empty'''
+    if len(p) == 4:
+        p[0] = p[1] + [p[3]]
+    elif len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[0] = []
+
 
 # Expresiones
 def p_expr(p):

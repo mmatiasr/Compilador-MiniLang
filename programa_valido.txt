@@ -1,0 +1,13 @@
+CONST int x = 10;
+CONST string message = "Hola, Mundo!";
+int z = 20;
+
+SUBROUTINE void mySubroutine(int a, string b) DO
+    print(a);
+    print(b);
+END
+
+SUBROUTINE void main() DO
+    print(message);
+    mySubroutine(100, "Texto de prueba");
+END

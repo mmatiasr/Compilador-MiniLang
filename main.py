@@ -1,18 +1,35 @@
+import os
 from parser_minilang import parser
 from semantic_analyzer import SemanticAnalyzer
-from casos_test import casos
+
+def leer_archivo(archivo):
+    """Lee el contenido de un archivo y lo devuelve como una cadena."""
+    # Obtener el directorio actual del script
+    directorio = os.path.dirname(os.path.abspath(__file__))
+    ruta_completa = os.path.join(directorio, archivo)
+
+    with open(ruta_completa, 'r') as f:
+        return f.read()
 
 if __name__ == "__main__":
-    for test_name, code in casos.items():
-        print(f"\n--- {test_name} ---")
-        try:
-            # Generar el AST
-            ast = parser.parse(code)
-            print("AST Generado:", ast)
+    # Especificar el archivo que deseas probar
+    archivo_prueba = "programa_valido.txt"  # Cambiar a "programa_invalido.txt" según el caso
+    print(f"Procesando archivo: {archivo_prueba}\n")
 
-            # Ejecutar el análisis semántico
-            analyzer = SemanticAnalyzer(ast)
-            analyzer.analyze()
-            print("Análisis semántico completado.\n")
-        except Exception as e:
-            print(f"Error: {e}\n")
+    try:
+        # Leer el contenido del archivo
+        codigo = leer_archivo(archivo_prueba)
+
+        # Generar el AST
+        ast = parser.parse(codigo)
+        print("AST Generado:")
+        print(ast)
+
+        # Ejecutar el análisis semántico
+        print("\nIniciando análisis semántico...")
+        analyzer = SemanticAnalyzer(ast)
+        analyzer.analyze()
+        print("\nAnálisis semántico completado. El programa es válido.")
+
+    except Exception as e:
+        print(f"\nError encontrado durante la ejecución: {e}")
