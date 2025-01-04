@@ -45,9 +45,6 @@ class SemanticAnalyzer:
         else:
             raise Exception(f"Nodo desconocido: {node.nodetype}")
 
-
-
-
     def visit_consts(self, node):
         print(f"Procesando nodo consts con {len(node.children)} declaraciones.")
         for const in node.children:
@@ -64,11 +61,8 @@ class SemanticAnalyzer:
 
     def visit_main(self, node):
         print("Analizando función main...")
-        #if len(node.children) > 0:
-         #   raise Exception("El bloque principal no puede contener código.")
         for stmt in node.children:
             self.visit(stmt)
-
 
     def visit_print(self, node):
         expr = node.children[0]
