@@ -28,7 +28,7 @@ if __name__ == "__main__":
         # Ejecutar el análisis semántico
         print("\nIniciando análisis semántico...")
         analyzer = SemanticAnalyzer(ast)
-        analyzer.analyze()
+        analyzer.analizar()
         print("\nAnálisis semántico completado. El programa es válido.")
 
     except Exception as e:
